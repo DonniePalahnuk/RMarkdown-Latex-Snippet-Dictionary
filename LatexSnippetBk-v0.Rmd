@@ -1,0 +1,364 @@
+--- 
+#yaml#
+title:    "Latex Snips Handbook"
+author:   "to-ohru iwanami {the hatch keeper}"
+date: |   
+      | \vhCurrentDate
+      | version \vhCurrentVersion
+      | InsightHatch: "LatexSnips"
+      | \textbf{IH-LatexSnips-v}\textbf{\vhCurrentVersion}
+documentclass:    book
+output:
+  pdf_document:
+    latex_engine:       lualatex
+    toc:                yes
+    number_sections:    yes
+    keep_tex:           yes
+    fig_caption:        yes
+subtitle: \textit{Insight Hatch Machine Leanring Reviews - Vol 2}
+#bibliography: citations.bib
+#csl: microbiology.csl
+link-citations:         yes
+nocite: '@*'
+fontsize:               12 pt
+geometry:               margin = 0.9in
+linestretch:            1.25
+papersize:              a4
+
+#latex header
+header-includes:
+ - |
+  ```{=latex}
+  \usepackage{pgfplots}
+  \newcommand{\docTitle}{Latex Snips Dictionary}
+
+  \raggedbottom                         % ensures no page fill
+
+  % setup special chapter only counter
+  \newcounter{chonlycounter}
+  \renewcommand{\thechonlycounter}{\thechapter}
+
+  % setup some special branding fonts 
+  % (this is only used at start of document - for product names )
+    \usepackage{fontspec}
+    \usepackage{textcomp}
+    \newfontface\poppins{Poppins}[Path=fonts/, 
+                              UprightFont=*-Regular, 
+                              BoldFont=*-Bold]
+    \newcommand{\textpoppins}[1]{{\poppins #1}}
+  
+    \newfontface\fluxreg{FluxRegular}[Path=fonts/, 
+                              UprightFont=*.otf]
+    \newcommand{\textfluxreg}[1]{{\fluxreg #1}}
+  
+    \newfontface\lato{Lato}[Path=fonts/, 
+                              UprightFont=*-Regular]
+    \newcommand{\textlato}[1]{{\lato #1}}
+  
+    \newfontface\ssp{SourceSansPro}[Path=fonts/, 
+                              UprightFont=*-Regular]
+    \newcommand{\textssp}[1]{{\ssp #1}}
+  
+    \newfontface\couriernew{Courier New}
+    \newcommand{\textcouriernew}[1]{{\couriernew #1}}
+  
+    \newfontface\arial{Arial}
+    \newcommand{\textarial}[1]{{\arial #1}}
+  
+    \newfontface\palatino{Palatino}
+    \newcommand{\textpalatino}[1]{{\palatino #1}}
+
+  % FOR GRAPHICS tikz and pgfplots
+  \usepackage{pgfplots}                % math plotting
+  \pgfplotsset{compat=1.18}
+
+  \usepackage{rotating}
+  
+  \usepackage{hyperref}
+  \usepackage{cleveref}
+
+  \usepackage{tikz}                    % tikz megatool
+  \usepackage{tikz-3dplot}
+  \usetikzlibrary{arrows.meta,shapes,backgrounds}
+
+  %\usepackage{fvextra}                 % special linebreaking 
+  %\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+  
+  %\usepackage[skins]{tcolorbox}
+  \usepackage{listings}
+  \usepackage{booktabs}
+  \usepackage{changepage}               % width formatting on page
+
+  \definecolor{dblu}{HTML}{002db3}
+  %\definecolor{cyan}{HTML}{99ccff}
+  %\definecolor{ltorng}{HTML}{99ccff}
+  %\definecolor{ltgrn}{HTML}{002db3}
+
+  \usepackage{titling}
+ 
+  % testing 20240414 - margin methods - to adjust
+  
+  \usepackage{layout}       % for margins setting ->employ:"\layout"
+  \usepackage{multicol}  
+  \usepackage{geometry} 
+
+  % Set asymmetric page margins (book formatting)
+  \geometry{
+  inner=0.75in,   % Inner margin
+  outer=1.0in,    % Outer margin
+  bottom=0.6in,   % Bottom margin
+  top=0.6in,      % Bottom margin
+  includeheadfoot  }
+
+  %\usepackage{lipsum}         % Generates filler text
+  
+  % math fonts and coloring
+  \usepackage{amsmath}
+  \usepackage{amsthm}
+  \usepackage{amssymb}        % specific symbols
+  \usepackage{mathrsfs}
+  \usepackage{xcolor}         % For coloring text
+  \usepackage{graphicx}
+
+  \definecolor{impactblue}{RGB}{30, 144, 255}
+  \definecolor{royalimpactblue}{RGB}{65, 105, 225} % Royal Blue, more vivid
+  \definecolor{navyimpactblue}{RGB}{0, 0, 128} %  avy Blue tone 
+   
+  \usepackage{caption}
+  \usepackage{subcaption}
+  \usepackage{adjustbox}
+  \usepackage{float}
+  
+  % so that weblinks are colored bluw
+  \usepackage{hyperref}
+  \hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+  }
+  
+  
+  \usepackage{enumitem}
+  \usepackage{varwidth}
+  \usepackage[nochapter, tocentry, owncaptions, tablegrid]{vhistory}
+  \usepackage{tasks}
+  \usepackage{scrlayer-scrpage}
+  \numberwithin{equation}{section}
+  \usepackage{lastpage}
+  \captionsetup[figure]{font=small,labelfont=small}
+
+  % Regular Theorems, definitions, lemmas, proofs
+  
+  \theoremstyle{plain}      % from `amsthm'
+  \newtheorem{theorem}{Theorem}
+ 
+  \theoremstyle{definition} % from `amsthm'
+  \newtheorem{defn}{Definition}
+  
+  \newtheorem{xmpl}{Example}% from `amsthm'
+  
+  \theoremstyle{remark}     % from `amsthm'
+  \newtheorem{remark}{Remark}
+  
+  \newtheorem{algorithm}{Algorithm} 
+  \newtheoremstyle{note}    % style name
+  {2ex}                     % above space
+  {2ex}                     % below space
+  {}                        % body font
+  {}                        % indent amount
+  {\scshape}                % head font
+  {.}                       % post head punctuation
+  {\newline}                % post head punctuation
+  {}                        % head spec
+  
+  \theoremstyle{note}         % from `amsthm'
+  \newtheorem{scnote}{Note}  
+
+  % Colorbox - Theorems, definitions, lemmas, proofs
+
+  \usepackage[most]{tcolorbox}          % does not included 'minted' (issue with rmd) 
+  \newtheorem{lem}{Lemma}		% from `amsthm'
+  \newtheorem{pruf}{Proof}		% from `amsthm'
+
+  \newtcbtheorem[number within=chapter]{a_thm}{Theorem}
+  {enhanced,frame empty,interior empty,colframe=green!50!white,
+    coltitle=green!40!black,fonttitle=\bfseries,colbacktitle=green!15!white,
+    borderline={0.5mm}{0mm}{green!15!white},  
+    attach boxed title to top left={yshift=-2mm},
+    boxed title style={boxrule=0.4pt},varwidth boxed title, , 
+    breakable, colback=white
+  }{theo}
+
+  % This is for Key Equations - and only indexes the Charter Number
+  % Should use only once in a Chapter 
+  \newtcbtheorem[use counter=chonlycounter]{a_def_eq}{Key ML Equation}
+  {enhanced,frame empty,interior empty,colframe=blue!50!white,
+    coltitle=blue!40!black,fonttitle=\bfseries,colbacktitle=blue!15!white,
+    borderline={0.5mm}{0mm}{blue!15!white},
+    attach boxed title to top left={yshift=-2mm},
+    boxed title style={boxrule=0.4pt},varwidth boxed title, 
+    breakable, colback=white
+  }{def_eq}
+
+  \newtcbtheorem[number within=chapter]{a_def}{Definition}
+  {enhanced,frame empty,interior empty,colframe=blue!50!white,
+    coltitle=blue!40!black,fonttitle=\bfseries,colbacktitle=blue!15!white,
+    borderline={0.5mm}{0mm}{blue!15!white},
+    attach boxed title to top left={yshift=-2mm},
+    boxed title style={boxrule=0.4pt},varwidth boxed title, 
+    breakable, colback=white
+  }{defi}
+
+  \newtcbtheorem[number within=chapter]{a_exmp}{Example}
+  {enhanced,frame empty,interior empty,colframe=cyan!50!white,
+    coltitle=cyan!20!black,fonttitle=\bfseries,colbacktitle=cyan!15!white,
+    borderline={0.5mm}{0mm}{cyan!15!white},
+    attach boxed title to top left={yshift=-2mm},
+    boxed title style={boxrule=0.4pt},varwidth boxed title, , 
+    breakable, colback=white
+  }{exmp}
+  
+  \newtcbtheorem[number within=chapter]{a_lemma}{Lemma}
+  {enhanced,frame empty,interior empty,colframe=cyan!50!white,
+    coltitle=cyan!20!black,fonttitle=\bfseries,colbacktitle=cyan!15!white,
+    borderline={0.5mm}{0mm}{cyan!15!white},
+    attach boxed title to top left={yshift=-2mm},
+    boxed title style={boxrule=0.4pt},varwidth boxed title, , 
+    breakable, colback=white
+  }{lema}
+
+  \tcolorboxenvironment{lem}{
+  enhanced jigsaw,colframe=cyan,interior hidden, breakable,before skip=10pt,after skip=10pt 
+  }
+  \tcolorboxenvironment{pruf}{			
+  blanker,breakable,left=5mm,
+  before skip=10pt,after skip=10pt,
+  borderline west={1mm}{0pt}{red}
+  }
+
+  \pretitle{%
+  \begin{flushleft} \LARGE
+  \includegraphics[width=2cm,height=2cm]{pictures/IH2.jpg}
+  \end{flushleft}
+  \begin{flushright} \LARGE
+  }
+  
+  \posttitle{\end{flushright}}
+  \preauthor{\begin{flushright}}
+  \postauthor{\end{flushright}}
+  \predate{\begin{flushright}}
+  \postdate{\end{flushright}}
+  
+  \ohead[]{IH - Machine Learning Reviews}
+  \ifoot{\hsize=350pt \docTitle\ -- Version \vhCurrentVersion}
+  \ofoot{\thepage~/~\pageref{LastPage}}
+  \cfoot[]{}
+  ```
+
+---
+<!-- headers above -->
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.pos = 'h',
+  tidy.opts = list(width.cutoff = 60),
+  fig.width = 4, 
+  fig.height = 3, 
+  fig.cap = "Default caption for all figures",  # Optional default caption
+  fig.align = "center"
+)
+library(reticulate)           # Python integration
+# cat("\\small\n")
+```
+
+\begin{versionhistory}
+  \vhEntry{0.00.0}{2024.11.11}{DP}{Created!}
+\end{versionhistory}
+\newpage
+
+\setcounter{table}{0}
+
+
+\frontmatter
+# Prefice and Introduction
+
+
+
+\newpage
+
+# r markdown code block tricks
+
+In this example, the backticks are used to encapsulate the LaTeX code, and it will be displayed as plain text in the output.
+
+## LaTeX Code Block that Renders
+
+To create a LaTeX code block that renders and displays the content as formatted output, you can use the same syntax but without the outer backticks. Instead, you simply write:
+
+
+
+#### Formula inline double dollar sign
+$$
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+
+## LaTeX Code Block Example
+
+To display the quadratic formula as a block equation, use the following syntax:
+
+```{r, echo=FALSE}
+# This chunk is used for any R code if needed
+2;
+```
+
+
+\newpage
+
+# tikzs
+
+\newpage
+
+## frist pic
+
+\begin{tikzpicture}
+  \def\xmin{0}
+  \def\xmax{10}
+  \def\ymin{0}
+  \def\ymax{10}
+  \draw[style=help lines, ystep=1, xstep=1] (\xmin,\ymin) grid
+  (\xmax,\ymax);
+
+  \draw (-.25,-.25) node[auto] {0};
+  \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$Q$};
+  \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$P$};
+
+  \def\intersectX{4.76}
+  \def\intersectY{4.26}
+  \def\QPX{4}
+  \def\QPY{5}
+  \draw[color=red] plot [domain=0:8] (\x,{((\x)^2)/10 +2)});
+  \draw[color=blue] plot [domain=0:8] (\x,{((\x-14)^2)/20)});
+
+  \fill[fill=pink,opacity=0.7] (0,\QPY) -- plot [domain=0:\QPY] (\x,{((\x-14)^2)/20)}) -- (\QPX,\QPY) -- cycle;
+  \fill[fill=cyan,opacity=0.7] (0,\QPY) -- plot [domain=0:\QPX] (\x,{((\x)^2)/10 +2)}) -- (\QPX,\QPY) -- cycle;
+
+  \draw [domain=\QPX:\intersectX]  plot(\x,{((\x-14)^2)/20)}) -- (\QPX,\QPY) -- (\QPX,\QPY) -- cycle; 
+
+  \draw [fill=green,opacity=0.7,domain=\QPX:\intersectX]  plot(\x,{((\x)^2)/10 +2)}) -- (\QPX,\QPY) -- cycle;
+
+  \draw[dashed]  (\intersectX,0) node[below] {$Q_1$} -- (\intersectX,\intersectY);
+  \draw[dashed]  (0,\intersectY) node[below] {$P_1$} -- (\intersectX,\intersectY);
+  \draw[dashed]  (0,\intersectY) node[below] {$P_1$} -- (\intersectX,\intersectY);
+  \draw[dashed]  (\QPX,0) node[below] {$Q_2$} -- (\QPX,\QPY);
+  \draw[dashed]  (0,\QPY) node[below] {$P_2$} -- (\QPX,\QPY);
+
+  \end{tikzpicture}
+
+\newpage
+
+
+
+
+
